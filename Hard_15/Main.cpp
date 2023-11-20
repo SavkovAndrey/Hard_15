@@ -6,6 +6,7 @@ using namespace std;
 
 float frand(int min, int max, int prc);         // случайное с точнокй (от , до , точность)
 int min_elem(float arr[], int n);
+double mult_elem(float arr[], int n);
 
 int main()
 {
@@ -25,7 +26,11 @@ int main()
 	cout << endl << endl;
 
 	cout << "Номер минимального эелемента = " << min_elem(arr, n) + 1 << endl;
+	
+	cout << "Произведение = " << round(mult_elem(arr, n) * 10) / 10 << endl;       // выводим с округлением до 1 знака посе ,
 
+
+	delete[] arr;
 	system("pause");
 	return 0;
 }
@@ -54,4 +59,42 @@ int min_elem(float arr[], int n)
 	}
 	return i_min;
 }
+
+//---------- ПРОИЗВЕДЕНИЕ ЭЛЕМЕНТОВ, НАХОДЯЩИХСЯ МЕЖДУ 1-ым и 2-ым ОТРИЦАТЕЛЬНЫМИ ЭЛЕМЕНТАМИ
+double mult_elem(float arr[], int n)
+{
+	double mult = 0;
+	int i_first = -1, i_second = -1;
+
+	for (int i = 0; i < n; i++)
+	{
+		if (arr[i] < 0)
+		{
+			i_first = i;
+			break;
+		}
+	}
+
+	for (int i = i_first + 1; i < n; i++)
+	{
+		if (arr[i] < 0)
+		{
+			i_second = i;
+			break;
+		}
+	}
+
+	if ((i_first != -1 && i_second != -1) && (i_second - i_first > 1))
+	{
+		mult = 1;
+		for (int i = i_first + 1; i < i_second; i++)
+		{
+			mult *= arr[i];
+		}
+		return mult;
+	}
+
+	return mult;
+}
+
 
