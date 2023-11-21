@@ -5,8 +5,9 @@
 using namespace std;
 
 float frand(int min, int max, int prc);         // случайное с точнокй (от , до , точность)
-int min_elem(float arr[], int n);
-double mult_elem(float arr[], int n);
+int min_elem(float arr[], int n);               // поиск мин 
+double mult_elem(float arr[], int n);           // произведение между двух отрицательных
+void sort(float*& arr, int n);                  // "сортировка"
 
 int main()
 {
@@ -29,6 +30,13 @@ int main()
 	
 	cout << "Произведение = " << round(mult_elem(arr, n) * 10) / 10 << endl;       // выводим с округлением до 1 знака посе ,
 
+	sort(arr, n);
+
+	for (int i = 0; i < n; i++)
+	{
+		cout << setw(6) << arr[i];
+	}
+	cout << endl << endl;
 
 	delete[] arr;
 	system("pause");
@@ -97,4 +105,34 @@ double mult_elem(float arr[], int n)
 	return mult;
 }
 
+//---------- СОРТИРОВКА (сначала все элементы меньше 1 по модулю, затем остальные)
+void sort(float*& arr, int n)
+{
+	float* copy_arr = new float[n];
+	for (int i = 0; i < n; i++)
+	{
+		copy_arr[i] = arr[i];
+	}
+
+	int k = 0;
+	for (int i = 0; i < n; i++)
+	{
+		if (abs(copy_arr[i]) < 1)
+		{
+			arr[k] = copy_arr[i];
+			k++;
+			copy_arr[i] = NULL;
+		}
+	}
+	for (int i = 0; i < n; i++)
+	{
+		if (copy_arr[i] != NULL)
+		{
+			arr[k] = copy_arr[i];
+			k++;
+		}
+	}
+
+	delete[] copy_arr;
+}
 
